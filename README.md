@@ -4,7 +4,7 @@ TO-DO: Add TC backstory
 
 ## Prerequisites 
 1. `Python 3.6+`
-2. Terraform Cloud Account (link)[https://app.terraform.io/signup/account] - Free Account Works
+2. Terraform Cloud Account [Here](https://app.terraform.io/signup/account) - Free Account Works
 3. Github Account 
 
 ## Installation
@@ -23,9 +23,9 @@ TerraChicken can be initially configured two ways.
 
 ### Environment Variables
 
-`TFC_TOKEN` - API Token generated from Terraform Cloud Settings. (help)
-`TFC_URL` - Terraform Cloud URL (app.terraform.io) unless using Terraform Enterprise
-`GIT_TOKEN` - Github Developer Access Token (Repo CRUD Perms at minimum)
+- `TFC_TOKEN` - API Token generated from Terraform Cloud Settings. (help)
+- `TFC_URL` - Terraform Cloud URL (app.terraform.io) unless using Terraform Enterprise
+- `GIT_TOKEN` - Github Developer Access Token (Repo CRUD Perms at minimum)
 
 To set an environment token use the following `export TFC_URL='app.terraform.io'`
 
