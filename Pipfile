@@ -7,6 +7,9 @@ name = "pypi"
 terrasnek = "*"
 Jinja2 = "*"
 PyGithub = "*"
+typer = "*"
+typer-cli = "*"
+
 
 [dev-packages]
 

@@ -1,7 +1,7 @@
 import time
 import os
 import functions
-import functions
+import utils
 
 
 TFC_ORGANIZATION = "devhop"
@@ -13,12 +13,12 @@ def main ():
 
     while TC_MODE == "Dev" or "DEV":
         dev_mode_enabled = True
-        print(f"{functions.bcolors.BOLD}{functions.bcolors.WARNING}Development Mode{functions.bcolors.ENDC}")
+        print(f"{utils.bcolors.BOLD}{utils.bcolors.WARNING}Development Mode{utils.bcolors.ENDC}")
         time.sleep(1)
         break
 
-    new_build = str.lower(input(f"Do you want to create a new {functions.bcolors.HEADER}Terraform Workspace{functions.bcolors.ENDC}? (Y/n): "))
-    workflow = str.lower(input(f"What type of {functions.bcolors.HEADER}Terraform Workspace{functions.bcolors.ENDC} is this? CLI or {functions.bcolors.BOLD}{functions.bcolors.OKCYAN}VCS{functions.bcolors.ENDC}: "))
+    new_build = str.lower(input(f"Do you want to create a new {utils.bcolors.HEADER}Terraform Workspace{utils.bcolors.ENDC}? (Y/n): "))
+    workflow = str.lower(input(f"What type of {utils.bcolors.HEADER}Terraform Workspace{utils.bcolors.ENDC} is this? CLI or {utils.bcolors.BOLD}{utils.bcolors.OKCYAN}VCS{utils.bcolors.ENDC}: "))
 
     if new_build == "y" and workflow == "vcs":
         name = str(input("Enter a Name of the workspace: "))
@@ -28,7 +28,7 @@ def main ():
             repo_url = functions.createRepoObject(repo_name) # creates repo and returns url
             functions.createVcsWorkspace(name, "1.1.3", repo_url)
             ws_id = functions.getWsId(name)
-            print(f"Workspace ID: {functions.bcolors.OKGREEN}{ws_id}{functions.bcolors.ENDC}")
+            print(f"Workspace ID: {utils.bcolors.OKGREEN}{ws_id}{utils.bcolors.ENDC}")
             time.sleep(1)
 
             terraformBlockConfiguration = str(input("Do you want to update a Local Terraform Configuration with the new workspace? (y/n): "))
@@ -39,7 +39,7 @@ def main ():
                     if tfVersion >= 1.1:
                         functions.createTerraformBlock(workflow, name, TFC_ORGANIZATION) 
                     else:
-                        print(f"{functions.bcolors.WARNING}Your Terraform Version cannot support the Cloud meta block. Upgrade to v1.1 or newer!{functions.bcolors.ENDC}")
+                        print(f"{utils.bcolors.WARNING}Your Terraform Version cannot support the Cloud meta block. Upgrade to v1.1 or newer!{utils.bcolors.ENDC}")
             else:
                 pass
             
@@ -47,7 +47,7 @@ def main ():
             if dev_mode_enabled == True:   
                 delete = input(f"Do you want to delete the last Workspace? (y/n) ")
                 if delete == "y":
-                    print(f"Deleting Workspace[{functions.bcolors.BOLD}{functions.bcolors.FAIL}{name}{functions.bcolors.ENDC}:{functions.bcolors.FAIL}{ws_id}{functions.bcolors.ENDC}]")
+                    print(f"Deleting Workspace[{utils.bcolorsBOLD}{utils.bcolorsFAIL}{name}{utils.bcolorsENDC}:{utils.bcolors.FAIL}{ws_id}{utils.bcolors.ENDC}]")
                     functions.deleteWorkspaces(name)
                     x = f"Thaley17/{name}"
                     functions.deleteRepo(x)
@@ -63,7 +63,7 @@ def main ():
         name = str(input("Enter a Name of the workspace: "))
         functions.createLocalWorkspace(name)
         ws_id = functions.getWsId(name)
-        print(f"Workspace ID: {functions.bcolors.OKGREEN}{ws_id}{functions.bcolors.ENDC}")
+        print(f"Workspace ID: {utils.bcolors.OKGREEN}{ws_id}{utils.bcolors.ENDC}")
         time.sleep(1)
 
 
@@ -74,13 +74,13 @@ def main ():
             functions.createTerraformBlock("cli", name, TFC_ORGANIZATION)
         else:
             time.sleep(1)
-            functions.clearConsole()
+            utils.clearConsole()
 
 
         if dev_mode_enabled == True:
             delete = input(f"Do you want to delete the last Workspace? (y/n) ")
             if delete == "y":
-                print(f"Deleting Workspace[{functions.bcolors.BOLD}{functions.bcolors.FAIL}{name}{functions.bcolors.ENDC}:{functions.bcolors.FAIL}{ws_id}{functions.bcolors.ENDC}]")
+                print(f"Deleting Workspace[{utils.bcolors.BOLD}{utils.bcolors.FAIL}{name}{utils.bcolors.ENDC}:{utils.bcolors.FAIL}{ws_id}{utils.bcolors.ENDC}]")
                 functions.deleteWorkspaces(name)
                 cwd = str(os.getcwd)
                 os.remove("payload.json") if os.path.exists("payload.json") else print("File Not Found!")
@@ -90,18 +90,18 @@ def main ():
         else:
             pass     
     else:
-        functions.clearConsole()
+        utils.clearConsole()
     
-    functions.banner()
-    list_workspaces = str.lower(input(f"List all {functions.bcolors.HEADER}Terraform Workspaces{functions.bcolors.ENDC} in Terraform Cloud Organization: {functions.bcolors.OKBLUE}{functions.bcolors.BOLD}{TFC_ORGANIZATION}{functions.bcolors.ENDC}? (Y/n): "))
+    utils.banner()
+    list_workspaces = str.lower(input(f"List all {utils.bcolors.HEADER}Terraform Workspaces{utils.bcolors.ENDC} in Terraform Cloud Organization: {utils.bcolors.OKBLUE}{utils.bcolors.BOLD}{TFC_ORGANIZATION}{utils.bcolors.ENDC}? (Y/n): "))
 
     if list_workspaces == "y":
         functions.listWorkspaces()
     else:
-        functions.clearConsole()
+        utils.clearConsole()
 
-    functions.banner()
-    delete_workspaces = str.lower(input(f"Do you want to {functions.bcolors.FAIL}delete{functions.bcolors.ENDC} any {functions.bcolors.HEADER}Terraform Workspaces{functions.bcolors.ENDC} in Terraform Cloud Organization: {functions.bcolors.OKBLUE}{functions.bcolors.BOLD}{TFC_ORGANIZATION}{functions.bcolors.ENDC}? (Y/n): "))
+    utils.banner()
+    delete_workspaces = str.lower(input(f"Do you want to {utils.bcolors.FAIL}delete{utils.bcolors.ENDC} any {utils.bcolors.HEADER}Terraform Workspaces{utils.bcolors.ENDC} in Terraform Cloud Organization: {utils.bcolors.OKBLUE}{utils.bcolors.BOLD}{TFC_ORGANIZATION}{utils.bcolors.ENDC}? (Y/n): "))
 
     if delete_workspaces == "y":
         functions.listWorkspaces()
@@ -110,7 +110,7 @@ def main ():
             try:
                 functions.deleteWorkspaces(name)
             except:
-                print(f"\n{functions.bcolors.WARNING}{name}{functions.bcolors.ENDC} not found in active Workspaces.")
+                print(f"\n{utils.bcolors.WARNING}{name}{utils.bcolors.ENDC} not found in active Workspaces.")
             finally:
                 functions.listWorkspaces()
     else:
