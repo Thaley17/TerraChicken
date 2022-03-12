@@ -1,16 +1,19 @@
 import typer
 import functions
-import utils
 
 app = typer.Typer()
 
-@app.command()
-def local():
-    typer.echo("Better Local Workspace")
+
 
 @app.command()
-def vcs():
-    typer.echo("Better VCS Workspace")
+def delete(name: str):
+    full_name = f"Thaley17/{name}"
+    typer.confirm(f"Are you sure you want to delete Thaley17/{name}?" , abort=True )
+    functions.deleteRepo(full_name)
+
+@app.command()
+def list():
+    pass
 
 if __name__ == "__main__":
     app()
