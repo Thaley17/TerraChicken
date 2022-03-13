@@ -1,0 +1,9 @@
+terraform {
+{% if workflow_type  == "cli" %}  backend "remote" { {% else %}  cloud { {% endif %}
+    organization = "{{ ws_org }}"
+
+    workspaces {
+      name = "{{ ws_name }}"
+    }
+  }
+}
