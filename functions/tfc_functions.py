@@ -30,9 +30,7 @@ def createLocalWorkspace(ws_name):
     create_payload = {'data': {'type': "workspaces" , 'attributes': {'name': ws_name , 'execution-mode': 'local' }}}
     api.workspaces.create(create_payload)
     print("Creation Completed!")
-    # exporting json for archive purpose
-    with open("payload.json" , "w") as f:
-        json.dump(create_payload, f, indent=2, sort_keys=True)
+    return create_payload
 
 # Creates VCS Workspace, Repo must be created first. Check the github functions for the CreateRepoObject()
 def createVcsWorkspace(ws_name, tf_version, repo_url):
@@ -52,9 +50,7 @@ def createVcsWorkspace(ws_name, tf_version, repo_url):
     'source-name': 'TerraChicken', 'terraform-version': tf_version , 'working-directory': "", 'vcs-repo': {'identifier': repo_url , 'oauth-token-id': oauth_token_id} }}}
     api.workspaces.create(create_payload)
     print("Creation Completed!")
-    # exporting for debug and archive
-    with open("payload.json" , "w") as f:
-        json.dump(create_payload, f, indent=2, sort_keys=True)
+    return create_payload
 
 
 def createTerraformBlock(workflow, name, org):
