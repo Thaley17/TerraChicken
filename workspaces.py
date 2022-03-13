@@ -52,7 +52,10 @@ def vcs(name: str = typer.Option(None, "--name" , "-n"), create_repo: str = type
     create_repo = typer.prompt("Create a new VCS Repo for this workspace? (y/n): ")
     if create_repo == "y":
         repo_name = str(typer.prompt("Enter Name for New Repo: "))
-        repo_url = functions.createRepoObject(repo_name)# creates repo and returns url
+        try:
+            repo_url = functions.createRepoObject(repo_name)# creates repo and returns url
+        except 
+        
         repo_url_formatted = typer.style(repo_url, fg=typer.colors.GREEN)
         typer.echo(f"Created Github Repo: {repo_url_formatted}")
     else: 
