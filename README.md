@@ -1,6 +1,8 @@
 # TerraChicken (Terra🐓)
 
 TO-DO: Add TC backstory
+TO-DO: Add --version and --init to def main() in root file
+
 
 ## Prerequisites 
 1. `Python 3.6+`

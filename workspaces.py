@@ -1,27 +1,37 @@
 import typer
 import functions
-import utils
 import time
 import os 
 
 app = typer.Typer()
 
+TFC_ORGANIZATION = "devhop"
+
+"""
+Module creates Local Terraform Cloud Workspace. Also returns Workspace ID
+"""
 @app.command()
-def local(name: str = typer.Option(None, show_default=False)):
+def local(name: str = typer.Option(None, "--name" , "-n") , generate: bool = 
+        typer.Option(False, "--generate/--no-generate", "-g/-G")):
     if name == None:
         name = str(typer.prompt("Enter a Name of the workspace: "))
-        functions.createLocalWorkspace(name)
-        ws_id = functions.getWsId(name)
-        ws_id_formatted = typer.style(f"{ws_id}", fg=typer.colors.GREEN)
-        typer.echo(f"Workspace ID:" + ws_id_formatted)
-        time.sleep(1)
     else:
-      functions.createLocalWorkspace(name)
-      ws_id = functions.getWsId(name)
-      ws_id_formatted = typer.style(f"{ws_id}", fg=typer.colors.GREEN)
-      typer.echo(f"Workspace ID:" + ws_id_formatted)
-      time.sleep(1)
+        pass
+    functions.createLocalWorkspace(name)
+    ws_id = functions.getWsId(name)
+    ws_id_formatted = typer.style(f"{ws_id}", fg=typer.colors.GREEN)
+    typer.echo(f"Workspace ID:" + ws_id_formatted)
+    if generate:
+        functions.createTerraformBlock("cli", name, TFC_ORGANIZATION)
+    else:
+        pass
+    time.sleep(1)
 
+"""
+Creates VCS Backed Workspace. Gives user the chance to create or BYO(Repo).
+
+ --out exports payload.json. --generate/-g: Generates Terraform Block Config 
+"""
 @app.command()
 def vcs(name: str = typer.Option(None, show_default=False), create_repo: str = typer.Option("y")):
     if name == None:
@@ -43,6 +53,14 @@ def vcs(name: str = typer.Option(None, show_default=False), create_repo: str = t
     ws_id = functions.getWsId(name)
     ws_id_formatted = typer.style(f"{ws_id}", fg=typer.colors.GREEN)
     typer.echo(f"Workspace ID:" + ws_id_formatted)
+    if generate:
+        tfVersion = functions.terraformVersion()
+        if tfVersion >= 1.1: # The cloud meta block wasn't implemented until v1.1.0
+            functions.createTerraformBlock("vcs", name, TFC_ORGANIZATION)
+        else:
+            typer.secho("Your Terraform Version cannot support the Cloud meta block. Upgrade to v1.1 or newer!" , fg=typer.colors.YELLOW)
+    else:
+        pass
     time.sleep(1)
         
 
