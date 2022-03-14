@@ -1,7 +1,6 @@
 import typer
 import functions
 import time
-import os 
 import json
 
 app = typer.Typer()
@@ -44,18 +43,17 @@ Creates VCS Backed Workspace. Gives user the chance to create or BYO(Repo).
 @app.command()
 def vcs(name: str = typer.Option(None, "--name" , "-n"), create_repo: str = typer.Option("y") , generate: bool = 
         typer.Option(False, "--generate/--no-generate", "-g/-G") , out: bool =
-        typer.Option(False, "--out/--in" , "-o/-O")):
+        typer.Option(False, "--out/--in" , "-o/-O") , private: bool = typer.Option(True, "--private/--public")):
     if name == None:
         name = str(typer.prompt("Enter a Name of the workspace: "))
     else:
         pass
     create_repo = typer.prompt("Create a new VCS Repo for this workspace? (y/n): ")
+    private_repo = True if private == True else False #Sets the Private argument inside of the createRepoObject
     if create_repo == "y":
         repo_name = str(typer.prompt("Enter Name for New Repo: "))
-        try:
-            repo_url = functions.createRepoObject(repo_name)# creates repo and returns url
-        except 
-        
+        typer.echo(private_repo)
+        repo_url = functions.createRepoObject(repo_name , private_repo)# creates repo and returns url
         repo_url_formatted = typer.style(repo_url, fg=typer.colors.GREEN)
         typer.echo(f"Created Github Repo: {repo_url_formatted}")
     else: 

@@ -4,7 +4,6 @@ import functions
 app = typer.Typer()
 
 
-
 @app.command()
 def delete(name: str):
     full_name = f"Thaley17/{name}"

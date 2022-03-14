@@ -47,7 +47,7 @@ def createVcsWorkspace(ws_name, tf_version, repo_url):
     id = token_list.get(oauth_selection)
     oauth_token_id = id['token'] #grabs oauth_token from the oauth client in the dict for the create_payload object
     create_payload = {'data': {'type': "workspaces" , 'attributes': {'name': ws_name , 'execution-mode': 'remote' , 
-    'source-name': 'TerraChicken', 'terraform-version': tf_version , 'working-directory': "", 'vcs-repo': {'identifier': repo_url , 'oauth-token-id': oauth_token_id} }}}
+    'source-name': 'Created with TerraChicken', 'terraform-version': tf_version , 'working-directory': "", 'vcs-repo': {'identifier': repo_url , 'oauth-token-id': oauth_token_id} }}}
     api.workspaces.create(create_payload)
     print("Creation Completed!")
     return create_payload
@@ -58,7 +58,8 @@ def createTerraformBlock(workflow, name, org):
     with open("rendered_main.tf" , "w") as f:
        f.write(mainTemplate.render(workflow_type=workflow , ws_name=name , ws_org=org))
     cwd = os.getcwd
-    print(f"File:'rendered_main.tf' can be found at {cwd}!")
+    path = f"File: 'rendered_main.tf' can be found at {cwd}!"
+    print(path)
 
 def terraformVersion():
     output = os.popen("terraform --version").read()
