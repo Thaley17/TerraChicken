@@ -25,7 +25,8 @@ def main ():
         create_repo = input("Create a new VCS Repo for this workspace? (y/n): ")
         if create_repo == "y":
             repo_name = str(input("Enter Name for New Repo: "))
-            repo_url = functions.createRepoObject(repo_name) # creates repo and returns url
+            repo_visability = True
+            repo_url = functions.createRepoObject(repo_name , repo_visability) # creates repo and returns url
             functions.createVcsWorkspace(name, "1.1.3", repo_url)
             ws_id = functions.getWsId(name)
             print(f"Workspace ID: {utils.bcolors.OKGREEN}{ws_id}{utils.bcolors.ENDC}")
