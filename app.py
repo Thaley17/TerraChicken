@@ -1,8 +1,6 @@
 import typer
-import time
 import os
 import functions
-import utils
 import create
 import delete
 import list

@@ -16,9 +16,9 @@ Module creates Local Terraform Cloud Workspace. Also returns Workspace ID
 --out exports payload.json. --generate/-g: Generates Terraform Block Config
 """
 @workspace.command()
-def local(name: str = typer.Option(None, "--name" , "-n") , generate: bool = 
-        typer.Option(False, "--generate/--no-generate", "-g/-G") , out: bool =
-        typer.Option(False, "--out/--in" , "-o/-O")):
+def local(name: str = typer.Option(None, "--name" , "-n", help="Workspace Name") , generate: bool = 
+        typer.Option(False, "--generate/--no-generate", "-g" , help="Generates a Terraform Block Configuration") , out: bool =
+        typer.Option(False, "--out/--in" , "-o" , help="JSON Output of Workspace payload")):
     if name == None:
         name = str(typer.prompt("Enter a Name of the workspace: "))
     else:
@@ -45,9 +45,9 @@ Creates VCS Backed Workspace. Gives user the chance to create or BYO(Repo).
  --out exports payload.json. --generate/-g: Generates Terraform Block Config 
 """
 @workspace.command()
-def vcs(name: str = typer.Option(None, "--name" , "-n"), create_repo: str = typer.Option("y") , generate: bool = 
-        typer.Option(False, "--generate/--no-generate", "-g/-G") , out: bool =
-        typer.Option(False, "--out/--in" , "-o/-O") , private: bool = typer.Option(True, "--private/--public")):
+def vcs(name: str = typer.Option(None, "--name" , "-n" , help="Workspace Name"), create_repo: str = typer.Option("y") , generate: bool = 
+        typer.Option(False, "--generate/--no-generate", "-g" , help="Generates a Terraform Block Configuration") , out: bool =
+        typer.Option(False, "--out/--in" , "-o" , help="JSON Output of Workspace payload") , private: bool = typer.Option(True, "--private/--public" , help="Sets Repo Visibilty")):
     if name == None:
         name = str(typer.prompt("Enter a Name of the workspace: "))
     else:
