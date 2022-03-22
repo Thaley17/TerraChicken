@@ -28,3 +28,12 @@ def deleteRepo(repo_name):
     g.get_repo(full_name_or_id=repo_name).delete()
     print("Deletion Complete")
 
+def listAllRepo():
+    for repo in g.get_user().get_repos():
+        print(repo.name)
+
+
+def getUserName():
+    user = g.get_user().login
+    return user
+

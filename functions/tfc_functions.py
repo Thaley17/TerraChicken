@@ -1,8 +1,5 @@
-
 import os
-import json
 import re
-import utils
 from terrasnek.api import TFC
 from jinja2 import Environment, FileSystemLoader, select_autoescape, Template
 
@@ -76,7 +73,8 @@ def listWorkspaces():
     for elem in reply_data:
         ws_id = elem["id"]
         ws_name = elem["attributes"]["name"]
-        print(f"{ws_id}:{utils.bcolors.BOLD}{utils.bcolors.HEADER}{ws_name}{utils.bcolors.ENDC}")
+        execution_mode = elem["attributes"]["execution-mode"]
+        print(f"{ws_id}:{ws_name}:{execution_mode}")
 
 def deleteWorkspaces(*args):
     def convertTuple(tup):
@@ -86,4 +84,3 @@ def deleteWorkspaces(*args):
             return str
     name = convertTuple(args)
     api.workspaces.destroy(workspace_name=name)
-

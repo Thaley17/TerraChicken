@@ -3,12 +3,14 @@ import time
 import os
 import functions
 import utils
-import repo
-import workspaces 
+import create
+import delete
+import list
 
 app = typer.Typer()
-app.add_typer(workspaces.app, name="create")
-app.add_typer(repo.app, name="repo")
+app.add_typer(create.app, name="create")
+app.add_typer(delete.app, name="delete")
+app.add_typer(list.app, name="list")
 
 TC_MODE = os.getenv("TC_MODE", None)
 
@@ -20,22 +22,7 @@ while TC_MODE == "Dev" or "DEV":
     break
 
 
-@app.command()
-def list():
-    functions.listWorkspaces()
 
-@app.command()
-def remove(ws_name: str = ""):
-    functions.listWorkspaces()
-    ws_name = str.lower(input("Enter the name of Workspace(s): ")).split()
-    for name in ws_name:
-        try:
-            functions.deleteWorkspaces(name)
-        except:
-            print(f"\n{utils.bcolors.WARNING}{name}{utils.bcolors.ENDC} not found in active Workspaces.")
-        finally:
-            typer.echo("Remaining Workspaces:")
-            functions.listWorkspaces()
 
 if __name__ == "__main__":
     app()

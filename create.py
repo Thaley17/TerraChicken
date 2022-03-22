@@ -4,18 +4,18 @@ import time
 import json
 
 app = typer.Typer()
-create_workspace = typer.Typer()
-app.add_typer(create_workspace, name="create")
-
+workspace = typer.Typer()
+app.add_typer(workspace, name="workspace")
 
 TFC_ORGANIZATION = "devhop"
+
 
 """
 Module creates Local Terraform Cloud Workspace. Also returns Workspace ID
 
 --out exports payload.json. --generate/-g: Generates Terraform Block Config
 """
-@create_workspace.command()
+@workspace.command()
 def local(name: str = typer.Option(None, "--name" , "-n") , generate: bool = 
         typer.Option(False, "--generate/--no-generate", "-g/-G") , out: bool =
         typer.Option(False, "--out/--in" , "-o/-O")):
@@ -38,12 +38,13 @@ def local(name: str = typer.Option(None, "--name" , "-n") , generate: bool =
         pass
     time.sleep(1)
 
+
 """
 Creates VCS Backed Workspace. Gives user the chance to create or BYO(Repo).
 
  --out exports payload.json. --generate/-g: Generates Terraform Block Config 
 """
-@create_workspace.command()
+@workspace.command()
 def vcs(name: str = typer.Option(None, "--name" , "-n"), create_repo: str = typer.Option("y") , generate: bool = 
         typer.Option(False, "--generate/--no-generate", "-g/-G") , out: bool =
         typer.Option(False, "--out/--in" , "-o/-O") , private: bool = typer.Option(True, "--private/--public")):
@@ -55,7 +56,6 @@ def vcs(name: str = typer.Option(None, "--name" , "-n"), create_repo: str = type
     private_repo = True if private == True else False #Sets the Private argument inside of the createRepoObject
     if create_repo == "y":
         repo_name = str(typer.prompt("Enter Name for New Repo: "))
-        typer.echo(private_repo)
         repo_url = functions.createRepoObject(repo_name , private_repo)# creates repo and returns url
         repo_url_formatted = typer.style(repo_url, fg=typer.colors.GREEN)
         typer.echo(f"Created Github Repo: {repo_url_formatted}")
@@ -80,7 +80,6 @@ def vcs(name: str = typer.Option(None, "--name" , "-n"), create_repo: str = type
     else:
         pass
     time.sleep(1)
-        
 
 if __name__ == "__main__":
     app()
