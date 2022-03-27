@@ -11,6 +11,7 @@ def list():
     Context:
     Workspace ID : Workspace Name : Execution Mode
     """
+    typer.echo("Exec-Mode  |  Workspace ID  |  Workspace Name")
     functions.listWorkspaces()
 
 @app.command("repos")

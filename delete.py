@@ -27,4 +27,5 @@ def delete(ws_name: str = ""):
             typer.echo(f"\n {ws_name_formatted} not found in active Workspaces.")
         finally:
             typer.echo("Remaining Workspaces:")
+            typer.echo("Exec-Mode  |  Workspace ID  |  Workspace Name")
             functions.listWorkspaces()

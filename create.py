@@ -50,7 +50,8 @@ def vcs(
     create_repo: str = typer.Option("y", help="Set Boolean to create repo"), 
     generate: bool = typer.Option(False, "--generate", "-g" , help="Generates a Terraform Block Configuration"),
     out: bool = typer.Option(False, "--out" , "-o" , help="JSON Output of Workspace payload"),
-    private: bool = typer.Option(True, "--private/--public" , help="Sets Repo Visibility")
+    private: bool = typer.Option(True, "--private/--public" , help="Sets Repo Visibility"),
+    terraform_version: str = typer.Option("1.1.3", "--tfversion" , "-v", help="Sets Terraform Version in Workspace")
     ):
     """
     Create Terraform Cloud VCS Workspace.
@@ -60,22 +61,22 @@ def vcs(
     *Optional* - Repo creation requires a Github or Gitlab Account Configured.
     """ 
     if name == None:
-        name = str(typer.prompt("Enter a Name of the workspace: "))
+        name = str(typer.prompt("Enter a Name of the workspace"))
     else:
         pass
-    create_repo = typer.prompt("Create a new VCS Repo for this workspace? (y/n): ")
+    create_repo = typer.prompt("Create a new VCS Repo for this workspace? [Y/n]")
     private_repo = True if private == True else False #Sets the Private argument inside of the createRepoObject
     if create_repo == "y":
-        repo_name = str(typer.prompt("Enter Name for New Repo: "))
+        repo_name = str(typer.prompt("Enter Name for New Repo"))
         repo_url = functions.createRepoObject(repo_name , private_repo)# creates repo and returns url
         repo_url_formatted = typer.style(repo_url, fg=typer.colors.GREEN)
         typer.echo(f"Created Github Repo: {repo_url_formatted}")
     else: 
-        account = str(typer.prompt("Enter name of account or organization: "))
-        repo = str(typer.prompt("Enter the name of the Repo you want to use: "))
+        account = str(typer.prompt("Enter name of account or organization"))
+        repo = str(typer.prompt("Enter the name of the Repo you want to use"))
         repo_url = "f{account}/{repo}"
         typer.echo(repo_url)
-    payload = functions.createVcsWorkspace(name, "1.1.3", repo_url)
+    payload = functions.createVcsWorkspace(name, terraform_version, repo_url)
     ws_id = functions.getWsId(name)
     ws_id_formatted = typer.style(f"{ws_id}", fg=typer.colors.GREEN)
     typer.echo(f"Workspace ID:" + ws_id_formatted)

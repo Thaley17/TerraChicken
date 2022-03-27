@@ -1,5 +1,6 @@
 import os
 import re
+import utils
 from terrasnek.api import TFC
 from jinja2 import Environment, FileSystemLoader, select_autoescape, Template
 from dotenv import load_dotenv
@@ -42,10 +43,8 @@ def createVcsWorkspace(ws_name, tf_version, repo_url):
         token_format = {display_name: {'token': oauth_token}}
         token_list.update(token_format)
     keys = token_list.keys() # selects keys from the dict above to present to user
-    sorted_keys = []
     for key in keys:
-        sorted_keys.append(key)
-    print(sorted_keys)    
+        print(key)       
     oauth_selection = input("Select Client from above: " )
     id = token_list.get(oauth_selection)
     oauth_token_id = id['token'] #grabs oauth_token from the oauth client in the dict for the create_payload object
@@ -60,8 +59,8 @@ def createTerraformBlock(workflow, name, org):
     mainTemplate = env.get_template("terraform_block.jinja2") #using j2 to generate template based on the workflow variable
     with open("rendered_main.tf" , "w") as f:
        f.write(mainTemplate.render(workflow_type=workflow , ws_name=name , ws_org=org))
-    cwd = os.getcwd
-    path = f"File: 'rendered_main.tf' can be found at {cwd}!"
+    cwd = os.getcwd()
+    path = str(f"File: {utils.bcolors.HEADER}'rendered_main.tf'{utils.bcolors.ENDC} can be found at {cwd}")
     print(path)
 
 def terraformVersion():
@@ -80,7 +79,7 @@ def listWorkspaces():
         ws_id = elem["id"]
         ws_name = elem["attributes"]["name"]
         execution_mode = elem["attributes"]["execution-mode"]
-        print(f"{ws_id}:{ws_name}:{execution_mode}")
+        print(f"{utils.bcolors.OKGREEN}{execution_mode}{utils.bcolors.ENDC}  :  {utils.bcolors.HEADER}{ws_id}{utils.bcolors.ENDC}  :  {utils.bcolors.OKBLUE}{ws_name}{utils.bcolors.ENDC}")
 
 def deleteWorkspaces(*args):
     def convertTuple(tup):
