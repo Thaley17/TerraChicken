@@ -2,10 +2,13 @@ import os
 import re
 from terrasnek.api import TFC
 from jinja2 import Environment, FileSystemLoader, select_autoescape, Template
+from dotenv import load_dotenv
+
+load_dotenv()
 
 TFC_TOKEN = os.getenv("TFC_TOKEN", None)
 TFC_URL = os.getenv("TFC_URL", None)
-TFC_ORGANIZATION = "devhop"
+TFC_ORGANIZATION = os.getenv("TFC_ORG", None)
 
 api = TFC(TFC_TOKEN, url=TFC_URL)
 api.set_org(TFC_ORGANIZATION)
@@ -39,7 +42,10 @@ def createVcsWorkspace(ws_name, tf_version, repo_url):
         token_format = {display_name: {'token': oauth_token}}
         token_list.update(token_format)
     keys = token_list.keys() # selects keys from the dict above to present to user
-    print(keys)
+    sorted_keys = []
+    for key in keys:
+        sorted_keys.append(key)
+    print(sorted_keys)    
     oauth_selection = input("Select Client from above: " )
     id = token_list.get(oauth_selection)
     oauth_token_id = id['token'] #grabs oauth_token from the oauth client in the dict for the create_payload object

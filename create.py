@@ -10,15 +10,15 @@ app.add_typer(workspace, name="workspace")
 TFC_ORGANIZATION = "devhop"
 
 
-"""
-Module creates Local Terraform Cloud Workspace. Also returns Workspace ID
 
---out exports payload.json. --generate/-g: Generates Terraform Block Config
-"""
 @workspace.command()
-def local(name: str = typer.Option(None, "--name" , "-n", help="Workspace Name") , generate: bool = 
-        typer.Option(False, "--generate/--no-generate", "-g" , help="Generates a Terraform Block Configuration") , out: bool =
-        typer.Option(False, "--out/--in" , "-o" , help="JSON Output of Workspace payload")):
+def local(name: str = typer.Option(None, "--name" , "-n", help="Workspace Name"),
+        generate: bool = typer.Option(False, "--generate", "-g" , help="Generates a Terraform Block Configuration"),
+        out: bool = typer.Option(False, "--out" , "-o" , help="JSON Output of Workspace payload")
+        ):
+    """
+    Create Terraform Cloud Local Workspace.
+    """    
     if name == None:
         name = str(typer.prompt("Enter a Name of the workspace: "))
     else:
@@ -45,9 +45,20 @@ Creates VCS Backed Workspace. Gives user the chance to create or BYO(Repo).
  --out exports payload.json. --generate/-g: Generates Terraform Block Config 
 """
 @workspace.command()
-def vcs(name: str = typer.Option(None, "--name" , "-n" , help="Workspace Name"), create_repo: str = typer.Option("y") , generate: bool = 
-        typer.Option(False, "--generate/--no-generate", "-g" , help="Generates a Terraform Block Configuration") , out: bool =
-        typer.Option(False, "--out/--in" , "-o" , help="JSON Output of Workspace payload") , private: bool = typer.Option(True, "--private/--public" , help="Sets Repo Visibilty")):
+def vcs(
+    name: str = typer.Option(None, "--name" , "-n" , help="Workspace Name"), 
+    create_repo: str = typer.Option("y", help="Set Boolean to create repo"), 
+    generate: bool = typer.Option(False, "--generate", "-g" , help="Generates a Terraform Block Configuration"),
+    out: bool = typer.Option(False, "--out" , "-o" , help="JSON Output of Workspace payload"),
+    private: bool = typer.Option(True, "--private/--public" , help="Sets Repo Visibility")
+    ):
+    """
+    Create Terraform Cloud VCS Workspace.
+    
+    User can create a repo or connect an existing repo.
+
+    *Optional* - Repo creation requires a Github or Gitlab Account Configured.
+    """ 
     if name == None:
         name = str(typer.prompt("Enter a Name of the workspace: "))
     else:
