@@ -1,9 +1,10 @@
 import os
 import re
-import utils
+import terrachicken.utils as utils
 from terrasnek.api import TFC
 from jinja2 import Environment, FileSystemLoader, select_autoescape, Template
 from dotenv import load_dotenv
+import typing
 
 load_dotenv()
 
@@ -20,21 +21,21 @@ env = Environment(
     autoescape= select_autoescape()
     )
 
-def getWsId(ws_name):
+def getWsId(ws_name: str) -> str:
         #using the search selector
         ws = api.workspaces.list(search=ws_name)
         ws_id = ws["data"][0]["id"] #since workspace names have to be unique the result will only have element
         return ws_id
 
 # Creates Workspaces with VCS Repo. Used to store state only
-def createLocalWorkspace(ws_name):
+def createLocalWorkspace(ws_name: str) -> dict:
     create_payload = {'data': {'type': "workspaces" , 'attributes': {'name': ws_name , 'execution-mode': 'local' }}}
     api.workspaces.create(create_payload)
     print("Creation Completed!")
     return create_payload
 
 # Creates VCS Workspace, Repo must be created first. Check the github functions for the CreateRepoObject()
-def createVcsWorkspace(ws_name, tf_version, repo_url):
+def createVcsWorkspace(ws_name: str, tf_version: str, repo_url: str) -> dict:
     oauth_client = api.oauth_clients.list() # need to retrieve a list of oauth clients IOT get oauth token id
     token_list = {}
     for i in oauth_client['data']: #Looping through data to add all OAUTH clients to a dict so user can pick the oauth client
@@ -55,7 +56,7 @@ def createVcsWorkspace(ws_name, tf_version, repo_url):
     return create_payload
 
 
-def createTerraformBlock(workflow, name, org):
+def createTerraformBlock(workflow: str, name: str, org: str) -> None:
     mainTemplate = env.get_template("terraform_block.jinja2") #using j2 to generate template based on the workflow variable
     with open("rendered_main.tf" , "w") as f:
        f.write(mainTemplate.render(workflow_type=workflow , ws_name=name , ws_org=org))

@@ -1,5 +1,5 @@
 import typer
-import functions
+import terrachicken.functions as functions
 
 app = typer.Typer()
 

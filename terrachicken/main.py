@@ -1,17 +1,14 @@
 import typer
-import os
-import create
-import delete
-import list
+import terrachicken.src as src
 from dotenv import load_dotenv
 from typing import Optional
 
 load_dotenv()
 
 app = typer.Typer()
-app.add_typer(create.app, name="create")
-app.add_typer(delete.app, name="delete")
-app.add_typer(list.app, name="list")
+app.add_typer(src.create.app, name="create")
+app.add_typer(src.delete.app, name="delete")
+app.add_typer(src.list.app, name="list")
 
 # TC_MODE = os.getenv("TC_MODE", None)
 
@@ -33,6 +30,3 @@ def version():
     typer.echo(f"v{__version__}")
 
 
-
-if __name__ == "__main__":
-    app()

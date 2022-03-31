@@ -1,4 +1,4 @@
 .DS*
-
+*.pyc
 payload.json
 *.env

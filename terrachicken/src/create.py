@@ -1,5 +1,5 @@
 import typer
-import functions
+import terrachicken.functions as functions
 import time
 import json
 
