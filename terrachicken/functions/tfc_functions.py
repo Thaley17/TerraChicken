@@ -8,12 +8,22 @@ import typing
 
 load_dotenv()
 
+
 TFC_TOKEN = os.getenv("TFC_TOKEN", None)
 TFC_URL = os.getenv("TFC_URL", None)
 TFC_ORGANIZATION = os.getenv("TFC_ORG", None)
 
-api = TFC(TFC_TOKEN, url=TFC_URL)
-api.set_org(TFC_ORGANIZATION)
+
+try:
+    api = TFC(TFC_TOKEN, url=TFC_URL)
+    api.set_org(TFC_ORGANIZATION)
+except:
+    error = str(f"{utils.bcolors.WARNING}No API Tokens found!{utils.bcolors.ENDC}\n\
+{utils.bcolors.BOLD}Refer to Docs: https://github.com/Thaley17/TerraChicken/blob/poetry-build/README.md{utils.bcolors.ENDC}")
+    print(error)
+    exit()
+
+
 
 
 env = Environment(

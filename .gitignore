@@ -1,4 +1,5 @@
 .DS*
 *.pyc
+__pycache__
 payload.json
 *.env

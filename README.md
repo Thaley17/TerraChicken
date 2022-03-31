@@ -25,13 +25,17 @@ TerraChicken only supports Environment Variables currently. Future versions will
 
 - `TFC_TOKEN` - API Token generated from Terraform Cloud Settings. 
 - `TFC_URL` - Terraform Cloud URL (app.terraform.io) unless using Terraform Enterprise
+- `TFC_ORG` - Terraform Cloud Organiztion Name
 - `GIT_TOKEN` - Github Developer Access Token (Repo CRUD Perms at minimum)
 
 To set an environment token use the following `export TFC_URL='app.terraform.io'`
 
+
+Hint: *After you set your tokens. You can install the built in `auto completion` with the `terrachicken --install-completion` command.*
+
 ## Using Terra🐓
 
-### Creating Workspaces
+## Creating Workspaces
 
 Terra🐓 supports creating `Local` and `VCS` or Version Control System (Github/Gitlab) workspaces. 
 
