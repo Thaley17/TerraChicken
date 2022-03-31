@@ -46,6 +46,8 @@ Example:
 
 You will be prompted to enter a `name` for your workspace. After a successful completion your new Workspace ID will be printed to the terminal.
 
+![tc local workspace][]
+
 ### VCS Workspace
 
 `terrachicken create workspace vcs`

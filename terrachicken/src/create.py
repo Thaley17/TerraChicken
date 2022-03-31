@@ -66,7 +66,7 @@ def vcs(
         pass
     create_repo = typer.prompt("Create a new VCS Repo for this workspace? [Y/n]")
     private_repo = True if private == True else False #Sets the Private argument inside of the createRepoObject
-    if create_repo == "y":
+    if create_repo == "y" or "Y":
         repo_name = str(typer.prompt("Enter Name for New Repo"))
         repo_url = functions.createRepoObject(repo_name , private_repo)# creates repo and returns url
         repo_url_formatted = typer.style(repo_url, fg=typer.colors.GREEN)

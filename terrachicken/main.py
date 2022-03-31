@@ -19,7 +19,7 @@ app.add_typer(src.list.app, name="list")
 #     typer.secho(f"Development Mode" , fg=typer.colors.YELLOW , bold=True)
 #     break
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 
 @app.command()

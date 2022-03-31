@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "terrachicken"
-version = "0.1.0"
+version = "0.1.1"
 description = "CLI Tool to configure Terraform Cloud Workspaces and Git Repos"
 authors = ["Thaley17 <tyler.haley.17@outlook.com>"]
 readme = "README.md"

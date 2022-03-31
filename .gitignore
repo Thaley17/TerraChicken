@@ -3,3 +3,4 @@
 __pycache__
 payload.json
 *.env
+dist/
