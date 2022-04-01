@@ -35,6 +35,8 @@ Hint: *After you set your tokens. You can install the built in `auto completion`
 
 ## Using Terra🐓
 
+Terrachicken support cli `--help` options with all commands.
+
 ## Creating Workspaces
 
 Terra🐓 supports creating `Local` and `VCS` or Version Control System (Github/Gitlab) workspaces. 
@@ -46,7 +48,8 @@ Example:
 
 You will be prompted to enter a `name` for your workspace. After a successful completion your new Workspace ID will be printed to the terminal.
 
-![tc local workspace][]
+![tc local workspace](https://github.com/Thaley17/TerraChicken/blob/media/local_wksp.png?raw=true)
+
 
 ### VCS Workspace
 
@@ -56,8 +59,19 @@ You will be prompted to enter a `name` for your workspace. After a successful co
 
 Creating a VCS backed workspace requires you to either create a repo or link and existing repo to the workspace. The default is to create a Github Repo along side the workspace. 
 
+![tc vcs workspace](https://github.com/Thaley17/TerraChicken/blob/media/vcs_w.png?raw=true)
 
-## Generating Terraform Block Configurations
+#### Create Workspace VCS Options
+
+- `--name`: Name of Workspace
+- `--generate`: Generate Terraform Block Configuration
+- `--out`: Exports TFC Configuration via `payload.json` 
+- `--tfversion`: Set Terraform Version in Workspace
+- `--create_repo`: Create Repo or nah
+- `--private`: Set Github Repo to Private
+- `--public`: Set Github Repo to Public
+  
+### Generating Terraform Block Configurations
 Example:
 
 `terrachicken create workspace vcs --name TerrachickenTest1 --generate`
@@ -80,25 +94,31 @@ Both `create workspace local` and `create workspace vcs` support generating a Te
 
 The Terraform Block settings will differ based on your workspace type. If you are creating a `local` workspace. The configuration sets `backend` with your workspace name. If you are creating a `vcs` workspace the configuration sets the `cloud` block. To use the VCS generated main.tf file, you will need to run the `terraform login` command if you want to execute cli commands for terraform. Click [here](https://www.terraform.io/cli/cloud/settings) to read about `cloud block` and `terraform login`.
 
-#### Create Workspace VCS Options
+### List
 
-- `--name`: Name of Workspace
-- `--generate`: Generate Terraform Block Configuration
-- `--out`: Exports TFC Configuration via `payload.json` 
-- `--tfversion`: Set Terraform Version in Workspace
-- `--create_repo`: Create Repo or nah
-- `--private`: Set Github Repo to Private
-- `--public`: Set Github Repo to Public
-  
+Terra🐓 lets you list your current TFC Workspaces and Repositories with a two simple commands.
+
+`terrachicken list workspaces` or `terrachicken list repos`
+
+### Delete
+
+#### Workspaces
+
+You can delete workspaces from your accounts with the `terrachicken delete workspace` command. Terra🐓 will list the available workspaces to delete. You will be prompted to enter the workspace name you want to delete. You can enter a single name or multiple workspaces by adding them as such `wksp1 wksp2 wksp3`. After every workspace deletion a new list of current workspaces will be printed.
+
+#### Repos
+
+You can delete repos from your github account with the `terrachicken delete repos` command. Terra🐓 will list all available repos to delete. You will be prompted to enter the name of the repo you want to delete. 
+
+Deleting repos will also prompt a confirmation of deletion for the account/repo you want to delete. *Note: Once you delete an account Terrachicken can not restore that repo*
+
 
 ## TO-DO
 
-2. `terrachicken init` command allows you to add your tokens. **Note** If you are using an Env Var labeled `TFC_TOKEN` , `TFC_URL` or `GIT_TOKEN`. Those ENV Vars will take priority
-
-TO-DO: Add TC backstory
-TO-DO: Add init configurations to set default OAuth Client
-TO-DO: Add --repo flag to copy --name flag
-TO-DO: Add Gitlab VCS Options
-TO-DO: Remove the utils.bcolors class, sub for the rich library
-TO-DO: Add option to delete workspace and repo at same time.
-TO-DO: Add more options to the TF Workspace Configuration.
+- [ ] TO-DO: Add pytest
+- [ ] TO-DO: Add init configurations to set default OAuth Client
+- [ ] TO-DO: Add --repo flag to copy --name flag
+- [ ] TO-DO: Add Gitlab VCS Options
+- [ ] TO-DO: Remove the utils.bcolors class, sub for the rich library
+- [ ] TO-DO: Add option to delete workspace and repo at same time.
+- [ ] TO-DO: Add more options to the TF Workspace Configuration.
