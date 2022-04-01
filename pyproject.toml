@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "terrachicken"
+version = "0.1.1"
+description = "CLI Tool to configure Terraform Cloud Workspaces and Git Repos"
+authors = ["Thaley17 <tyler.haley.17@outlook.com>"]
+readme = "README.md"
+repository = "https://github.com/Thaley17/TerraChicken"
+
+[tool.poetry.scripts]
+terrachicken = "terrachicken.main:app"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+terrasnek = "0.1.9"
+Jinja2 = "3.0.3"
+PyGithub = "1.55"
+typer = "0.3.2"
+python-dotenv = "0.19.2"
+
+[tool.poetry.dev-dependencies]
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
